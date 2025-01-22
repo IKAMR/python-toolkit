@@ -53,75 +53,28 @@ def split_csv(input_file, output_folder, max_size=None, max_rows=None, ext_col=N
                 reader = csv.reader(file)
                 header = next(reader)
 
-                # Prepare extension filtering if ext_list is provided
-                ext_files = {}
-                other_rows = []
-                if ext_list:
-                    ext_list = [ext.strip().lower() for ext in ext_list.split(",")]
-
-                file_count = 1
-                current_size = 0
-                current_rows = 0
-
-                output_file = os.path.join(output_folder, f"{prefix}_{file_count}.csv")
-                output_file_handle = open(output_file, 'w', encoding='utf-8', newline='')
-                writer = csv.writer(output_file_handle)
-                writer.writerow(header)
+                log.write("Debugging first 20 rows:\n")
+                row_count = 0
 
                 for row in reader:
-                    write_row = True
+                    if row_count >= 20:
+                        log.write("Stopping after debugging 20 rows.\n")
+                        break
 
-                    # Handle extension-based filtering
+                    ext_value = None
                     if ext_col is not None:
-                        ext_value = os.path.splitext(row[ext_col].strip().lower())[1]  # Extracts the extension (e.g., ".xml")
-                        ext_value = ext_value.lstrip(".")  # Removes the leading dot for consistency
-                        if ext_list:
-                            if ext_value in ext_list:
-                                if ext_value not in ext_files:
-                                    ext_files[ext_value] = open(
-                                        os.path.join(output_folder, f"{prefix}_{ext_value}.csv"),
-                                        'w', encoding='utf-8', newline='')
-                                    ext_writer = csv.writer(ext_files[ext_value])
-                                    ext_writer.writerow(header)
-                                    ext_files[ext_value] = ext_writer
-                                ext_files[ext_value].writerow(row)
-                                write_row = False
-                            else:
-                                other_rows.append(row)
-                                write_row = False
+                        ext_value = os.path.splitext(row[ext_col].strip().lower())[1].lstrip(".")
+                    
+                    log.write(f"Row {row_count + 1}: {row}\n")
+                    log.write(f"Extracted extension: {ext_value}\n")
 
-                    if write_row:
-                        writer.writerow(row)
-                        output_file_handle.flush()
-                        current_size = os.path.getsize(output_file)
-                        current_rows += 1
+                    if ext_list:
+                        match_status = ext_value in ext_list
+                        log.write(f"Extension in list: {match_status}\n")
+                    else:
+                        log.write("Extension list not provided.\n")
 
-                    if (max_size and current_size >= max_size) or (max_rows and current_rows >= max_rows):
-                        output_file_handle.close()
-                        log.write(f"Created file: {output_file}\n")
-                        file_count += 1
-                        current_size = 0
-                        current_rows = 0
-                        output_file = os.path.join(output_folder, f"{prefix}_{file_count}.csv")
-                        output_file_handle = open(output_file, 'w', encoding='utf-8', newline='')
-                        writer = csv.writer(output_file_handle)
-                        writer.writerow(header)
-
-                # Write remaining "other" rows if ext_list is used
-                if ext_list and other_rows:
-                    other_file = os.path.join(output_folder, f"{prefix}_other.csv")
-                    with open(other_file, 'w', encoding='utf-8', newline='') as other_handle:
-                        other_writer = csv.writer(other_handle)
-                        other_writer.writerow(header)
-                        other_writer.writerows(other_rows)
-                        log.write(f"Created file: {other_file}\n")
-
-                output_file_handle.close()
-                log.write(f"Created file: {output_file}\n")
-
-                # Close all extension files
-                for ext, ext_writer in ext_files.items():
-                    ext_writer._file.close()
+                    row_count += 1
 
         except Exception as e:
             log.write(f"An error occurred: {e}\n")

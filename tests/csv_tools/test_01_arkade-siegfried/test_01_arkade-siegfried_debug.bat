@@ -5,7 +5,7 @@ REM If not used leave blank or ""
 
 REM Python Script
 REM set _python=C:\git\debug\python-toolkit\tests\csv_tools\csv_splitter.py
-set _python=C:\git\debug\python-toolkit\code\csv_tools\csv_splitter.py
+set _python=C:\git\debug\python-toolkit\code\csv_tools\csv_splitter_debug.py
 
 REM Source Folder and File
 
