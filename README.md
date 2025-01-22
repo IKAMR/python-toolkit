@@ -13,7 +13,7 @@ Whether you're dealing with flat file formats, data cleanup, or custom processin
 ## Contents
 1. [Features](#features)
 2. [Getting Started](#getting-started)
-3. [Usage Examples](#usage-examples)
+3. [Python snippets](#usage-examples)
 4. [Contributing](#contributing)
 5. [License](#license)
 
@@ -43,22 +43,17 @@ Whether you're dealing with flat file formats, data cleanup, or custom processin
 
 ---
 
-## Usage Examples
-- **Split a CSV File by Column Values**
+## Python snippets
+- **CSV Spliter Tool**
    ```python
-   from csv_splitter import split_csv_by_column
+   The **CSV Splitter Tool** is a versatile Python script designed to split large CSV files into smaller, manageable parts. It supports splitting by:
+	- File size (e.g., 500 bytes, 50kB, 200MB, 1GB).
+	- Row count (e.g., maximum rows per file).
+	- Specific column values (e.g., grouping by file extensions).
+	- A combination of these criteria.
 
-   split_csv_by_column('input.csv', 'output_folder', column_index=1)
+	This tool is useful for handling large datasets, organizing data by categories, or preparing files for downstream processing.
    ```
-- **Validate Dataset Integrity**
-   ```python
-   from data_validator import validate_file
-
-   is_valid = validate_file('data.csv')
-   print(f"File valid: {is_valid}")
-   ```
-
-Add more examples here as your scripts grow!
 
 ---
 

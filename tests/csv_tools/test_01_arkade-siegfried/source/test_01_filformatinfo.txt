@@ -1,0 +1,3 @@
+Formatanalyse er utført!
+Resultat lagret i:
+Y:\arkiv-test\filformater\_prod_psw_combo_analyse\prod_psw_combo-filformatinfo.csv
