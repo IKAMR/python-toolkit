@@ -14,8 +14,9 @@ Whether you're dealing with flat file formats, data cleanup, or custom processin
 1. [Features](#features)
 2. [Getting Started](#getting-started)
 3. [Python snippets](#usage-examples)
-4. [Contributing](#contributing)
-5. [License](#license)
+4. [Changelog](#changelog)
+5. [Contributing](#contributing)
+6. [License](#license)
 
 ---
 
@@ -54,6 +55,11 @@ Whether you're dealing with flat file formats, data cleanup, or custom processin
 
 	This tool is useful for handling large datasets, organizing data by categories, or preparing files for downstream processing.
    ```
+
+---
+
+## Changelog
+For detailed information about updates and changes to the project, see the [Changelog](docs/CHANGELOG.md).
 
 ---
 
